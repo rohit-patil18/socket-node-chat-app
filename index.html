@@ -1,13 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socket.io Chat App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      #container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      #messages {
+        list-style-type: none;
+        padding: 0;
+      }
+      #messages li {
+        padding: 5px 10px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      #form {
+        display: flex;
+        margin-top: 20px;
+      }
+      #input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px 0 0 5px;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #submit {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 0 5px 5px 0;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      @media (max-width: 600px) {
+        #container {
+          padding: 10px;
+        }
+        #input {
+          padding: 5px;
+        }
+        #submit {
+          padding: 5px 10px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="container">
+      <ul id="messages"></ul>
+      <form id="form" action="">
+        <input
+          id="input"
+          autocomplete="off"
+          placeholder="Type your message..."
+        />
+        <button id="submit">Send</button>
+      </form>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
