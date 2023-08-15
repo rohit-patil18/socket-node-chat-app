@@ -11,35 +11,43 @@
         padding: 0;
         background-color: #f4f4f4;
       }
+
       #container {
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 95vh;
       }
+
       #messages {
-        list-style-type: none;
-        padding: 0;
-      }
-      #messages li {
-        padding: 5px 10px;
-        margin-bottom: 5px;
-        border-radius: 5px;
+        flex-grow: 1;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
         background-color: #fff;
+        border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
       }
+
       #form {
         display: flex;
-        margin-top: 20px;
+        align-items: center;
       }
+
       #input {
         flex: 1;
         padding: 10px;
         border: none;
         border-radius: 5px 0 0 5px;
       }
+
       #input:focus {
         outline: none;
       }
+
       #submit {
         padding: 10px 20px;
         border: none;
@@ -48,6 +56,7 @@
         color: #fff;
         cursor: pointer;
       }
+
       @media (max-width: 600px) {
         #container {
           padding: 10px;
@@ -63,7 +72,7 @@
   </head>
   <body>
     <div id="container">
-      <ul id="messages"></ul>
+      <div id="messages"></div>
       <form id="form" action="">
         <input
           id="input"
@@ -79,16 +88,22 @@
     <script>
       $(function () {
         const socket = io();
+        const $messages = $("#messages");
+        const $form = $("#form");
+        const $input = $("#input");
 
-        $("form").submit(function () {
-          const message = $("#input").val();
-          socket.emit("chat message", message);
-          $("#input").val("");
+        $form.submit(function () {
+          const message = $input.val().trim();
+          if (message !== "") {
+            socket.emit("chat message", message);
+            $input.val("");
+          }
           return false;
         });
 
         socket.on("chat message", function (msg) {
-          $("#messages").append($("<li>").text(msg));
+          $messages.append($("<div>").text(msg).addClass("message"));
+          $messages.scrollTop($messages[0].scrollHeight); // Scroll to bottom
         });
       });
     </script>
