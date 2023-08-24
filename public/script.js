@@ -1,20 +1,24 @@
 $(function () {
-    const socket = io();
-    const $messages = $("#messages");
-    const $form = $("#form");
-    const $input = $("#input");
+  const socket = io();
+  const $messages = $("#messages");
+  const $form = $("#form");
+  const $input = $("#input");
+  const $username = $("#username"); // Add this line to get the username input field
 
-    $form.submit(function () {
-        const message = $input.val().trim();
-        if (message !== "") {
-            socket.emit("chat message", message);
-            $input.val("");
-        }
-        return false;
-    });
+  $form.submit(function () {
+    const username = $username.val().trim(); // Get the username
+    const message = $input.val().trim();
 
-    socket.on("chat message", function (msg) {
-        $messages.append($("<div>").text(msg).addClass("message"));
-        $messages.scrollTop($messages[0].scrollHeight);
-    });
+    if (username !== "" && message !== "") {
+      socket.emit("chat message", { username, message }); // Send username and message
+      $input.val("");
+    }
+    return false;
+  });
+
+  socket.on("chat message", function (data) {
+    const { username, message } = data; // Extract username and message from received data
+    $messages.append($("<div>").html(`<span class="username">${username}:</span> ${message}`).addClass("message"));
+    $messages.scrollTop($messages[0].scrollHeight);
+  });
 });
