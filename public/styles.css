@@ -14,6 +14,32 @@ body {
   height: 95vh;
 }
 
+.message-container {
+  position: relative;
+  max-width: 70%;
+  margin-bottom: 10px;
+}
+
+.message {
+  position: relative;
+  padding: 10px;
+  margin: 12px;
+  border-radius: 15px;
+  background-color: #a4c9f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+  display: inline-block;
+}
+
+.message::before {
+  content: attr(data-username);
+  font-size: 10px;
+  color: #777;
+  text-align: start;
+  display: block;
+  margin-bottom: 3px;
+}
+
 #messages {
   flex-grow: 1;
   overflow-y: auto;
@@ -25,26 +51,26 @@ body {
   border-radius: 5px;
 }
 
-.message-container {
+/* .message-container {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   max-width: 70%;
   margin-bottom: 10px;
-}
+} */
 
 .other-message-container {
   align-items: flex-start;
 }
 
-.message {
+/* .message {
   padding: 10px;
   margin: 12px;
   border-radius: 15px;
   background-color: #a4c9f0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
-}
+} */
 
 .other-message {
   background-color: #f0f0f0;

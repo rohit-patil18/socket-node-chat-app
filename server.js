@@ -24,8 +24,10 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  socket.on('chat message', (data) => {
+    const { username, message } = data;
+    const formattedMessage = `${username}: ${message}`;
+    io.emit('chat message', formattedMessage);
   });
 });
 
