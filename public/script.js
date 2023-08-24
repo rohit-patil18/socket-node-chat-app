@@ -18,7 +18,26 @@ $(function () {
 
   socket.on("chat message", function (data) {
     const { username, message } = data; // Extract username and message from received data
-    $messages.append($("<div>").html(`<span class="username">${username}:</span> ${message}`).addClass("message"));
+
+    const emojiMap = {
+      react: "⚛️",
+      woah: "😲",
+      hey: "👋",
+      lol: "😂",
+      like: "🤍",
+      congratulations: "🎉",
+    };
+
+    const newMessage = message.split(" ").map(item => {
+      for (const key in emojiMap) {
+        if (key.toLowerCase() === item.toLowerCase()) {
+          return emojiMap[key];
+        }
+        return item;
+      }
+    })
+
+    $messages.append($("<div>").html(`<span class="username">${username}:</span> ${newMessage}`).addClass("message"));
     $messages.scrollTop($messages[0].scrollHeight);
   });
 });
